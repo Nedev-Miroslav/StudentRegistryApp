@@ -5,7 +5,7 @@ suite('Add Students page', function() {
   test('Page title', async function() {
     let res = await fetch("http://localhost:8888/add-student");
     let body = await res.text();
-    assert.ok(body.includes("<h1>Register New DevOps Student</h1>"));
+    assert.ok(body.includes("<h1>Register New DevOps Student 2024</h1>"));
   });
 
   test('Students HTML form', async function() {
