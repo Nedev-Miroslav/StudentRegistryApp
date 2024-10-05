@@ -21,7 +21,7 @@ jobs:
     - name: Install dependencies   
       run: npm install
 
-  test-start:
+  test:
     runs-on: ubuntu-latest
     needs: build
     steps:
@@ -33,7 +33,19 @@ jobs:
         node-version: 20
     - name: Install dependencies   
       run: npm install
-    - name: Start app
-      run: npm run start &
+    # Така стартираме app-а с & указваме да е в Background mode  
+    # - name: Start app
+    #   run: npm run start &
     - name: Execute tests
       run: npm run test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Deploy to production
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: ${{ secrets.MY_RENDER_SERVICE_ID }}
+          api-key: ${{ secrets.MY_RENDER_API_KEY }}
+          wait-for-success: true
